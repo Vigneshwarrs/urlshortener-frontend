@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/url/';
+const API_URL = 'https://urlshortener-backend-gyml.onrender.com/api/url/';
 
 export const createShortUrl = (originalUrl) => {
   const token = localStorage.getItem('token');
