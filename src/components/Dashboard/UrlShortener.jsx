@@ -64,6 +64,7 @@ export default function UrlShortener() {
             value={originalUrl}
             onChange={(e) => setOriginalUrl(e.target.value)}
             sx={{ mb: 2 }}
+            color="primary"
           />
           <Button
             type="submit"
@@ -75,9 +76,9 @@ export default function UrlShortener() {
           </Button>
           {shortUrl && (
             <Box sx={{ mt: 2 }}>
-              <Typography variant="body1">
+              <Typography variant="body1" color="text.primary">
                 Short URL: 
-                <a href={redirectUrl(shortUrl)} target="_blank" rel="noopener noreferrer">
+                <a href={redirectUrl(shortUrl)} target="_blank" style={{ color: '#6a1b9a' }} rel="noopener noreferrer">
                   {shortUrl}
                 </a>
               </Typography>

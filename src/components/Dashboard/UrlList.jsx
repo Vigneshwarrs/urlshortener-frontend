@@ -31,7 +31,7 @@ export default function UrlList() {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+        <Typography component="h1" variant="h5" sx={{ mb: 3 }} color="text.primary">
           Your URLs
         </Typography>
 
@@ -57,7 +57,7 @@ export default function UrlList() {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{url.originalURL}</TableCell>
                     <TableCell>
-                      <a href={redirectUrl(url.shortURL)} target="_blank" rel="noopener noreferrer">
+                      <a href={redirectUrl(url.shortURL)} style={{ color: '#6a1b9a' }} target="_blank" rel="noopener noreferrer">
                         {url.shortURL}
                       </a>
                     </TableCell>

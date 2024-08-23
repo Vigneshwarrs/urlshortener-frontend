@@ -31,7 +31,7 @@ function Dashboard() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h2" color="text.primary" gutterBottom>
         Dashboard
       </Typography>
       <Grid container spacing={2}>
