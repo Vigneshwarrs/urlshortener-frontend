@@ -8,7 +8,7 @@ import {
   Alert,
   Snackbar,
 } from '@mui/material';
-import { createShortUrl } from '../../services/urlService';
+import { createShortUrl, redirectUrl } from '../../services/urlService';
 
 export default function UrlShortener() {
   const [originalUrl, setOriginalUrl] = useState('');
@@ -77,7 +77,7 @@ export default function UrlShortener() {
             <Box sx={{ mt: 2 }}>
               <Typography variant="body1">
                 Short URL: 
-                <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+                <a href={redirectUrl(shortUrl)} target="_blank" rel="noopener noreferrer">
                   {shortUrl}
                 </a>
               </Typography>
