@@ -36,7 +36,7 @@ function Dashboard() {
       }
     }
     fetchStats();
-  }, []);
+  }, [stats]);
 
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
