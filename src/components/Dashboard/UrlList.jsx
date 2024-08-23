@@ -1,11 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Alert } from '@mui/material';
+import {
+  Container,
+  Box,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  CircularProgress,
+  Alert,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { getUserUrls, redirectUrl } from '../../services/urlService';
 
 export default function UrlList() {
   const [urls, setUrls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     async function fetchUrls() {
@@ -13,7 +30,7 @@ export default function UrlList() {
         const response = await getUserUrls();
         setUrls(response.data);
       } catch (err) {
-        setError('Error fetching URLs');
+        setError('Error fetching URLs. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -31,33 +48,41 @@ export default function UrlList() {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5" sx={{ mb: 3 }} color="text.primary">
+        <Typography component="h1" variant="h5" sx={{ mb: 3 }} color="primary">
           Your URLs
         </Typography>
 
         {loading ? (
-          <CircularProgress />
+          <Box display="flex" alignItems="center" justifyContent="center" minHeight="200px">
+            <CircularProgress />
+          </Box>
         ) : error ? (
-          <Alert severity="error" sx={{ mb: 2 }}>
+          <Alert severity="error" sx={{ mb: 2, width: '100%' }}>
             {error}
           </Alert>
         ) : (
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ width: '100%', overflowX: isSmallScreen ? 'auto' : 'hidden' }}>
             <Table>
               <TableHead>
-                <TableRow>
-                  <TableCell>S.No</TableCell>
-                  <TableCell>Original URL</TableCell>
-                  <TableCell>Short URL</TableCell>
+                <TableRow sx={{ backgroundColor: 'primary.main' }}>
+                  <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>S.No</TableCell>
+                  <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>Original URL</TableCell>
+                  <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>Short URL</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {urls.map((url, index) => (
                   <TableRow key={url["_id"]}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{url.originalURL}</TableCell>
-                    <TableCell>
-                      <a href={redirectUrl(url.shortURL)} style={{ color: '#6a1b9a' }} target="_blank" rel="noopener noreferrer">
+                    <TableCell sx={{ color: '#000', border: '1px solid white' }}>{index + 1}</TableCell>
+                    <TableCell sx={{ color: '#000', border: '1px solid white' }}>{url.originalURL}</TableCell>
+                    <TableCell sx={{ color: '#000', border: '1px solid white' }}>
+                      <a
+                        href={redirectUrl(url.shortURL)}
+                        style={{ color: '#6a1b9a' }}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Redirect to ${url.shortURL}`}
+                      >
                         {url.shortURL}
                       </a>
                     </TableCell>

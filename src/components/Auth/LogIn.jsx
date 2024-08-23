@@ -18,6 +18,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { login } from "../../services/authService";
+import { useTheme } from "@mui/material/styles";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -32,6 +33,7 @@ export default function LogIn() {
   const [loading, setLoading] = React.useState(false);
 
   const navigate = useNavigate();
+  const theme = useTheme(); // Access theme for consistent styling
 
   const handleClose = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -56,20 +58,19 @@ export default function LogIn() {
       setLoading(true);
       try {
         await login(values.username, values.password)
-        .then((res)=>{
-          console.log(res);
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-          setSnackbar({
-            open: true,
-            message: "Login successful! Redirecting to your dashboard...",
-            severity: "success",
+          .then((res) => {
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+            setSnackbar({
+              open: true,
+              message: "Login successful! Redirecting to your dashboard...",
+              severity: "success",
+            });
+            setTimeout(() => {
+              navigate("/dashboard");
+              authForm.resetForm();
+            }, 3000);
           });
-          setTimeout(() => {
-           navigate("/dashboard");
-           authForm.resetForm();
-          }, 3000);
-        });
       } catch (error) {
         console.error("Login error:", error);
         setSnackbar({
@@ -88,21 +89,21 @@ export default function LogIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
-        width={450}
         sx={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           padding: 3,
-          borderRadius: 1,
-          boxShadow: 3
+          borderRadius: 2,
+          boxShadow: 3,
+          backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: theme.palette.primary.main }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ color: theme.palette.text.primary }}>
           Sign In
         </Typography>
         <Box component="form" onSubmit={authForm.handleSubmit} sx={{ mt: 1 }}>
@@ -119,6 +120,7 @@ export default function LogIn() {
             error={authForm.touched.username && Boolean(authForm.errors.username)}
             helperText={authForm.touched.username && authForm.errors.username}
             autoFocus
+            sx={{ input: { color: theme.palette.text.primary } }}
           />
           <TextField
             margin="normal"
@@ -133,6 +135,7 @@ export default function LogIn() {
             onBlur={authForm.handleBlur}
             error={authForm.touched.password && Boolean(authForm.errors.password)}
             helperText={authForm.touched.password && authForm.errors.password}
+            sx={{ input: { color: theme.palette.text.primary } }}
           />
           <Button
             type="submit"
@@ -147,12 +150,12 @@ export default function LogIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/forgot-password" variant="body2">
+              <Link to="/forgot-password" style={{ color: theme.palette.primary.main }}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/register" variant="body2">
+              <Link to="/register" style={{ color: theme.palette.primary.main }}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

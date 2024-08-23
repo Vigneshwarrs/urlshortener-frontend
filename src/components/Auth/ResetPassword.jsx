@@ -10,8 +10,9 @@ import {
   TextField,
   Typography,
   Snackbar,
-  Alert
+  Alert,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { resetPassword } from '../../services/authService';
 
 const validationSchema = yup.object({
@@ -32,16 +33,17 @@ const validationSchema = yup.object({
 export default function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [snackbar, setSnackbar] = React.useState({
     open: false,
     message: '',
-    severity: 'info'
+    severity: 'info',
   });
 
   const formik = useFormik({
     initialValues: {
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -50,20 +52,20 @@ export default function ResetPassword() {
         setSnackbar({
           open: true,
           message: 'Password has been reset successfully.',
-          severity: 'success'
+          severity: 'success',
         });
-        setTimeout(() =>{
+        setTimeout(() => {
           navigate('/login');
           formik.resetForm();
-        },5000);
+        }, 5000);
       } catch (err) {
         setSnackbar({
           open: true,
           message: 'Error resetting password. Please try again.',
-          severity: 'error'
+          severity: 'error',
         });
       }
-    }
+    },
   });
 
   const handleClose = () => {
@@ -81,13 +83,14 @@ export default function ResetPassword() {
           alignItems: 'center',
           padding: 3,
           borderRadius: 1,
-          boxShadow: 3
+          boxShadow: 3,
+          backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ color: theme.palette.text.primary }}>
           Reset Password
         </Typography>
-        <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 2 }}>
           <TextField
             margin="normal"
             required
@@ -103,6 +106,7 @@ export default function ResetPassword() {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
             autoFocus
+            sx={{ input: { color: theme.palette.text.primary } }}
           />
           <TextField
             margin="normal"
@@ -118,11 +122,13 @@ export default function ResetPassword() {
             onBlur={formik.handleBlur}
             error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
             helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+            sx={{ input: { color: theme.palette.text.primary } }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
+            color="primary"
             sx={{ mt: 3, mb: 2 }}
           >
             Reset Password

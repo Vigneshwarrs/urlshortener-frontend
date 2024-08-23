@@ -1,22 +1,42 @@
-// src/theme.js
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark', // Use dark mode for a black background
     primary: {
-      main: '#6a1b9a', // Purple color
+      main: '#6D28D9',
     },
     secondary: {
-      main: '#c62828', // Accent color (optional)
+      main: '#000000',
     },
     background: {
-      default: '#000000', // Black background
-      paper: '#424242', // Dark grey for paper elements
+      default: '#FFFFFF',
+      paper: '#F3F4F6',
     },
     text: {
-      primary: '#ffffff', // White text for visibility
-      secondary: '#e0e0e0', // Lighter grey for secondary text
+      primary: '#000000',
+      secondary: '#4C1D95',
+    },
+    action: {
+      hover: '#D6BCFA',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h1: {
+          color: '#6D28D9',
+        },
+        body1: {
+          color: '#000000',
+        },
+      },
     },
   },
 });

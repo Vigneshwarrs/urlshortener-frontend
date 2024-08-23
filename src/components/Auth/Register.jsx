@@ -18,6 +18,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { register } from "../../services/authService";
+import { useTheme } from "@mui/material/styles";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -32,6 +33,7 @@ export default function Register() {
   const [loading, setLoading] = React.useState(false);
 
   const navigate = useNavigate();
+  const theme = useTheme(); // Access theme for consistent styling
 
   const handleClose = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -100,14 +102,15 @@ export default function Register() {
           flexDirection: "column",
           alignItems: "center",
           padding: 3,
-          borderRadius: 1,
-          boxShadow: 3
+          borderRadius: 2,
+          boxShadow: 3,
+          backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: theme.palette.primary.main }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ color: theme.palette.text.primary }}>
           Sign Up
         </Typography>
         <Box
@@ -134,6 +137,7 @@ export default function Register() {
                   authForm.touched.firstName && authForm.errors.firstName
                 }
                 autoFocus
+                sx={{ input: { color: theme.palette.text.primary } }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -152,6 +156,7 @@ export default function Register() {
                 helperText={
                   authForm.touched.lastName && authForm.errors.lastName
                 }
+                sx={{ input: { color: theme.palette.text.primary } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -170,6 +175,7 @@ export default function Register() {
                 helperText={
                   authForm.touched.username && authForm.errors.username
                 }
+                sx={{ input: { color: theme.palette.text.primary } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -189,6 +195,7 @@ export default function Register() {
                 helperText={
                   authForm.touched.password && authForm.errors.password
                 }
+                sx={{ input: { color: theme.palette.text.primary } }}
               />
             </Grid>
           </Grid>
@@ -205,7 +212,7 @@ export default function Register() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/login" variant="body2">
+              <Link to="/login" style={{ color: theme.palette.primary.main }}>
                 Already have an account? Log In
               </Link>
             </Grid>

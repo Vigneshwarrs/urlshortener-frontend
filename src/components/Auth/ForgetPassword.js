@@ -18,6 +18,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { forgotPassword } from "../../services/authService";
+import { useTheme } from "@mui/material/styles";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -32,6 +33,7 @@ export default function ForgotPassword() {
   const [loading, setLoading] = React.useState(false);
 
   const navigate = useNavigate();
+  const theme = useTheme(); // Access theme for consistent styling
 
   const handleClose = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -83,17 +85,18 @@ export default function ForgotPassword() {
           flexDirection: "column",
           alignItems: "center",
           padding: 3,
-          borderRadius: 1,
-          boxShadow: 3
+          borderRadius: 2,
+          boxShadow: 3,
+          backgroundColor: theme.palette.background.paper,
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: theme.palette.primary.main }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ color: theme.palette.text.primary }}>
           Reset Your Password
         </Typography>
-        <Typography component="p" variant="body2" sx={{ mt: 1, textAlign: "center" }}>
+        <Typography component="p" variant="body2" sx={{ mt: 1, textAlign: "center", color: theme.palette.text.secondary }}>
           Enter your email address below and we'll send you a link to reset your password.
         </Typography>
         <Box component="form" onSubmit={authForm.handleSubmit} sx={{ mt: 2 }}>
@@ -111,6 +114,7 @@ export default function ForgotPassword() {
             helperText={authForm.touched.username && authForm.errors.username}
             autoFocus
             aria-label="Email Address"
+            sx={{ input: { color: theme.palette.text.primary } }}
           />
           <Button
             type="submit"
@@ -125,8 +129,8 @@ export default function ForgotPassword() {
           </Button>
           <Grid container justifyContent="center">
             <Grid item>
-              <Link to="/login" variant="body2">
-                {"Return to Sign In"}
+              <Link to="/login" style={{ color: theme.palette.primary.main }}>
+                Return to Sign In
               </Link>
             </Grid>
           </Grid>
