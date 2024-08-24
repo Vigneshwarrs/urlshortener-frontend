@@ -17,3 +17,7 @@ export const forgotPassword = (username) => {
 export const resetPassword = (token, password) => {
   return axios.post(`${API_URL}reset-password/${token}`, { password });
 };
+
+export const activateUser = (token) => {
+  return axios.get(`${API_URL}activate/${token}`);
+}

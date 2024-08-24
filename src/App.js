@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import LogIn from './components/Auth/LogIn';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoutes';
+import Activation from './components/Auth/Activation';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path='/reset-password/:token' element={<ResetPassword />} />
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path='/' element={<Navigate to='/login' />} />
+        <Route path="/activate/:token" element={<Activation />} />
+
       </Routes>
     </div>
   );

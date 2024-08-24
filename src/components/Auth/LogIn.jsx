@@ -12,6 +12,7 @@ import {
   Slide,
   Snackbar,
   CircularProgress,
+  useMediaQuery,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -34,6 +35,7 @@ export default function LogIn() {
 
   const navigate = useNavigate();
   const theme = useTheme(); // Access theme for consistent styling
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check if the screen size is small
 
   const handleClose = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
@@ -89,6 +91,7 @@ export default function LogIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
+        width={isSmallScreen ? "100%" : 450} // Adjust width for small screens
         sx={{
           marginTop: 8,
           display: "flex",
@@ -112,7 +115,7 @@ export default function LogIn() {
             required
             fullWidth
             id="username"
-            label="Username"
+            label="Email Address"
             name="username"
             value={authForm.values.username}
             onChange={authForm.handleChange}
@@ -148,8 +151,8 @@ export default function LogIn() {
           >
             {loading ? "Signing In..." : "Sign In"}
           </Button>
-          <Grid container>
-            <Grid item xs>
+          <Grid container justifyContent="space-between">
+            <Grid item>
               <Link to="/forgot-password" style={{ color: theme.palette.primary.main }}>
                 Forgot password?
               </Link>
