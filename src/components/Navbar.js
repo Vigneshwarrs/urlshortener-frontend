@@ -11,7 +11,8 @@ import {
   Alert,
   Avatar,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Tooltip,
 } from '@mui/material';
 import { Logout as LogoutIcon } from '@mui/icons-material';
 
@@ -65,14 +66,23 @@ function Navbar() {
       <AppBar position="static" color="primary" sx={{ mb: 2 }}>
         <Toolbar
           sx={{
-            flexDirection: isSmallScreen ? 'column' : 'row',
+            flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: isSmallScreen ? 'center' : 'space-between',
+            justifyContent: 'space-between',
+            p: 2,
+            gap: 2,
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: isSmallScreen ? 'center' : 'flex-start', flexGrow: 1 }}>
-            {token && user ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexGrow: 1,
+              justifyContent: isSmallScreen ? 'center' : 'flex-start',
+            }}
+          >
+            {token && user && (
+              <Tooltip title={user.name} arrow>
                 <Avatar
                   sx={{ bgcolor: 'blueviolet', marginRight: 1 }}
                   alt={user.name}
@@ -80,40 +90,75 @@ function Navbar() {
                 >
                   {user.name.charAt(0)}
                 </Avatar>
-                <Typography variant="body1" color="inherit">
-                  {user.name}
-                </Typography>
-              </Box>
-            ) : null}
+              </Tooltip>
+            )}
           </Box>
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-            <Typography variant="h6" component="div" sx={{ textAlign: 'center' }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Typography
+              variant={'h5'}
+              component="div"
+              sx={{ textAlign: 'center' }}
+            >
               <Link to="/dashboard" style={{ color: 'inherit', textDecoration: 'none' }}>
                 URL Shortener
               </Link>
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: isSmallScreen ? 'center' : 'flex-end', flexGrow: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end', // Always align to the right
+              flexGrow: 1,
+            }}
+          >
             {token ? (
               <>
-                <Button
-                  color="inherit"
-                  component={Link}
-                  to="/dashboard"
-                  sx={{
-                    color: theme.palette.primary.contrastText,
-                    '&:hover': { backgroundColor: theme.palette.action.hover },
-                  }}
-                >
-                  Dashboard
-                </Button>
-                <IconButton
-                  color="inherit"
-                  onClick={handleLogout}
-                  sx={{ color: '#6a1b9a' }}
-                >
-                  <LogoutIcon />
-                </IconButton>
+                {/* Show the Dashboard button only on larger screens */}
+                {!isSmallScreen && (
+                  <Button
+                    color="inherit"
+                    component={Link}
+                    to="/dashboard"
+                    sx={{
+                      color: theme.palette.primary.contrastText,
+                      '&:hover': { backgroundColor: theme.palette.action.hover },
+                    }}
+                  >
+                    Dashboard
+                  </Button>
+                )}
+                {isSmallScreen ? (
+                  // Mobile Screen: IconButton only
+                  <IconButton
+                    color="inherit"
+                    onClick={handleLogout}
+                    sx={{ color: '#6a1b9a' }}
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                ) : (
+                  // Desktop Screen: Button with text
+                  <Button
+                    color="inherit"
+                    onClick={handleLogout}
+                    sx={{
+                      color: '#6a1b9a',
+                      '&:hover': { backgroundColor: theme.palette.action.hover },
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <LogoutIcon sx={{ marginRight: 0.5 }} /> Logout
+                  </Button>
+                )}
               </>
             ) : (
               <>
@@ -156,11 +201,7 @@ function Navbar() {
           sx={{ width: '100%' }}
           action={
             snackbar.severity === 'warning' ? (
-              <Button
-                color="inherit"
-                size="small"
-                onClick={confirmLogout}
-              >
+              <Button color="inherit" size="small" onClick={confirmLogout}>
                 Confirm
               </Button>
             ) : null
