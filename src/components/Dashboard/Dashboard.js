@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Typography, Card, CardContent, Box, CircularProgress, CssBaseline, Snackbar, Alert } from '@mui/material';
+import { Container, Grid, Typography, Card, CardContent, Box, CircularProgress, CssBaseline, Snackbar, Alert, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import UrlShortener from './UrlShortener';
-import UrlList from './UrlList';
 import { getUserStats } from '../../services/urlService';
 
 function Dashboard() {
@@ -13,7 +13,7 @@ function Dashboard() {
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: '',
-    severity: 'info'
+    severity: 'info',
   });
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Dashboard() {
         setSnackbar({
           open: true,
           message: 'Error fetching statistics. Please try again later.',
-          severity: 'error'
+          severity: 'error',
         });
       }
     }
@@ -45,22 +45,19 @@ function Dashboard() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <CssBaseline />
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12}>
           <UrlShortener />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <UrlList />
-        </Grid>
       </Grid>
-      <Box mt={4}>
+      <Box mt={4} textAlign="center">
         <Typography variant="h4" gutterBottom>
           User Statistics
         </Typography>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} sm={6} md={4}>
             <Card>
-              <CardContent>
+              <CardContent sx={{ textAlign: 'center' }}>
                 <Typography variant="h6">URLs Created Today</Typography>
                 {stats.loading ? (
                   <Box display="flex" alignItems="center" justifyContent="center" minHeight="100px">
@@ -76,7 +73,7 @@ function Dashboard() {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Card>
-              <CardContent>
+              <CardContent sx={{ textAlign: 'center' }}>
                 <Typography variant="h6">URLs Created This Month</Typography>
                 {stats.loading ? (
                   <Box display="flex" alignItems="center" justifyContent="center" minHeight="100px">
@@ -91,6 +88,9 @@ function Dashboard() {
             </Card>
           </Grid>
         </Grid>
+        <Button component={Link} to="/url-list" variant="contained" color="primary" sx={{ mt: 4 }}>
+          View Your URLs
+        </Button>
       </Box>
       <Snackbar
         open={snackbar.open}

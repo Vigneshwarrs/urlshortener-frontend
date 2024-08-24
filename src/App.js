@@ -8,6 +8,7 @@ import LogIn from './components/Auth/LogIn';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoutes';
 import Activation from './components/Auth/Activation';
+import UrlListPage from './components/Dashboard/UrlListPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password/:token' element={<ResetPassword />} />
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/url-list" element={<ProtectedRoute><UrlListPage /></ProtectedRoute>} />
         <Route path='/' element={<Navigate to='/login' />} />
         <Route path="/activate/:token" element={<Activation />} />
 

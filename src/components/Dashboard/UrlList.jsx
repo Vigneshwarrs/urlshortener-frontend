@@ -68,6 +68,7 @@ export default function UrlList() {
                   <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>S.No</TableCell>
                   <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>Original URL</TableCell>
                   <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>Short URL</TableCell>
+                  <TableCell sx={{ color: '#ffffff', border: '1px solid white' }}>Created Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -86,6 +87,7 @@ export default function UrlList() {
                         {url.shortURL}
                       </a>
                     </TableCell>
+                    <TableCell sx={{ color: '#000', border: '1px solid white' }}>{new Date(url.createdAt).toLocaleString()}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
