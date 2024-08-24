@@ -16,6 +16,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { getUserUrls, redirectUrl } from '../../services/urlService';
+import {format} from 'date-fns';
 
 export default function UrlList() {
   const [urls, setUrls] = useState([]);
@@ -39,7 +40,7 @@ export default function UrlList() {
   }, []);
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="xl">
       <Box
         sx={{
           marginTop: 8,
@@ -84,10 +85,11 @@ export default function UrlList() {
                         rel="noopener noreferrer"
                         aria-label={`Redirect to ${url.shortURL}`}
                       >
-                        {url.shortURL}
+                        {redirectUrl(url.shortURL)}
                       </a>
                     </TableCell>
-                    <TableCell sx={{ color: '#000', border: '1px solid white' }}>{new Date(url.createdAt).toLocaleString()}</TableCell>
+                    {console.log(url)}
+                    <TableCell sx={{ color: '#000', border: '1px solid white' }}>{format(url.createdAt, "dd/MM/yyyy")}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
