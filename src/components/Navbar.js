@@ -71,7 +71,7 @@ function Navbar() {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: isSmallScreen ? 'center' : 'flex-start', flexGrow: 1 }}>
-            {token && user && (
+            {token && user ? (
               <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
                 <Avatar
                   sx={{ bgcolor: 'blueviolet', marginRight: 1 }}
@@ -84,7 +84,7 @@ function Navbar() {
                   {user.name}
                 </Typography>
               </Box>
-            )}
+            ) : null}
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
             <Typography variant="h6" component="div" sx={{ textAlign: 'center' }}>
